@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname', 'lastname', 'username', 'email', 'password', 'group_id'
     ];
 
     /**
@@ -23,4 +23,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function group(){
+        return $this->belongsTo('App\UserGroup');
+    }
+    
+    public function purchased(){
+        return $this->belongsToMany('App\Stock', 'user_purchased_stock')->withPivot('purchase_price');
+    }
+    
+    public function uploaded(){
+        return $this->belongsToMany('App\Stock', 'user_has_stock');
+    }
 }
